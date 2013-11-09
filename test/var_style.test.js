@@ -29,6 +29,12 @@ describe('lib/var_style.js', function () {
       }).should.eql({
         test_data: [{array_data: 1}, {array_data: 2}, {array_data: {third_level_in_array : 1} } ]
       });
+      function customToSnake(key, reg) {
+        return key.replace(/[A-Z][a-z]/g, function (a) {
+          return '_' + a.toLowerCase();
+        });
+      }
+      transformer.camelToSnake({testData: {secondLevel: 1}}, customToSnake).should.eql({test_data: {second_level: 1}});
     });
   });
 
@@ -40,7 +46,7 @@ describe('lib/var_style.js', function () {
       transformer.snakeToCamel('').should.equal('');
       transformer.snakeToCamel('string test').should.equal('string test');
       var now = new Date();
-      transformer.snakeToCamel(now).should.equal(now);
+      transformer.snakeToCamel(now).should.equal(now);      
     });
 
     it('should transform ok', function () {
@@ -51,6 +57,12 @@ describe('lib/var_style.js', function () {
       }).should.eql({
         testData: [{arrayData: 1}, {arrayData: 2}, {arrayData: {thirdLevelInArray: 1} } ] 
       });
+      function customToCamel(key, reg) {
+        return key.replace(/_([a-z])/g, function (all, a) {
+          return a.toUpperCase();
+        });
+      };
+      transformer.snakeToCamel({test_data: {second_level: 1}}, customToCamel).should.eql({testData: {secondLevel: 1}});
     });    
   });
 
@@ -60,7 +72,6 @@ describe('lib/var_style.js', function () {
       transformer.toSnake('buy1d').should.equal('buy_1d');
       transformer.toSnake('foo1').should.equal('foo1');
       transformer.toSnake('cat1Main').should.equal('cat1_main');
-      transformer.toSnake('cat11Main', /[^a-z]/g).should.equal('cat_1_1_main');
     });
   });
 
