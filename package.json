@@ -1,0 +1,25 @@
+{
+  "name": "var-style",
+  "version": "0.0.1",
+  "description": "Transform variable style between camel case and snake case.",
+  "keywords": [],
+  "author": "dead-horse <dead_horse@qq.com>",
+  "repository": { "type": "git", "url": "git@github.com:dead-horse/var-style.git" },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "blanket": ">=1.1.4",
+    "travis-cov": "*"
+  },
+  "scripts": {
+    "test": "make test-all",
+    "blanket": {
+      "pattern": "//^((?!(node_modules|test)).)*$/"
+    },
+    "travis-cov": {
+      "threshold": 90
+    }    
+  },  
+  "main": "index"
+}
